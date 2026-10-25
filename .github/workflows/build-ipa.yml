@@ -1,0 +1,25 @@
+name: Build unsigned IPA
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx cap sync ios
+      - name: Archive (unsigned)
+        run: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -archivePath "$PWD/build/App.xcarchive" archive CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+      - name: Package IPA
+        run: |
+          cd ios/App/build/App.xcarchive/Products/Applications
+          mkdir Payload && cp -r App.app Payload/
+          zip -qr "$GITHUB_WORKSPACE/electribe.ipa" Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: electribe-ipa
+          path: electribe.ipa
