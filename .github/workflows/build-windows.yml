@@ -1,0 +1,19 @@
+name: Build Windows app
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: copy www\index.html windows\index.html
+      - run: npm install
+        working-directory: windows
+      - run: npx electron-builder --win portable --publish never
+        working-directory: windows
+      - uses: actions/upload-artifact@v4
+        with:
+          name: electribe-windows
+          path: windows/dist/*.exe

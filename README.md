@@ -27,3 +27,9 @@ Hinweis: Web-MIDI gibt es im iOS-WebView nicht; MIDI bräuchte ein natives Plugi
 ## Intel-Mac / ohne Homebrew
 Homebrew unterstützt Intel-Macs nicht mehr. Dann: GitHub-Cloud-Build (siehe oben).
 Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/build-ipa.yml.
+
+## MIDI zu FL Studio (Windows) per WLAN
+1. PC: rtpMIDI (Tobias Erichsen) installieren, iPad im selben WLAN, Zugriff aufs lokale Netzwerk erlauben.
+2. In rtpMIDI das iPad unter "Directory" wählen und "Connect" (sonst manuell: IP des iPads, Port 5004).
+3. FL Studio: Options > MIDI Settings > Input: das rtpMIDI-Gerät aktivieren (Enable).
+4. In der App: Menu/Enter > "MIDI Out (WLAN)" > Menu/Enter = AN. Part n sendet auf MIDI-Kanal n (Drums: Note 60).

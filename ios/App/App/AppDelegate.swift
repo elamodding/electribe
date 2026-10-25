@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 import Capacitor
+import CoreMIDI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,4 +50,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
 
+}
+
+
+// MARK: - Netzwerk-MIDI (RTP-MIDI) zu FL Studio
+@objc(MidiBridgePlugin)
+public class MidiBridgePlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "MidiBridgePlugin"
+    public let jsName = "MidiBridge"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "send", returnType: CAPPluginReturnPromise)
+    ]
+    private var client = MIDIClientRef()
+    private var outPort = MIDIPortRef()
+
+    override public func load() {
+        let session = MIDINetworkSession.default()
+        session.isEnabled = true
+        session.connectionPolicy = .anyone
+        MIDIClientCreate("electribe" as CFString, nil, nil, &client)
+        MIDIOutputPortCreate(client, "electribe-out" as CFString, &outPort)
+    }
+
+    @objc func send(_ call: CAPPluginCall) {
+        guard let ints = call.getArray("bytes", Int.self), !ints.isEmpty else { call.resolve(); return }
+        let bytes = ints.map { UInt8(truncatingIfNeeded: $0) }
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        let dest = MIDINetworkSession.default().destinationEndpoint()
+        buffer.withUnsafeMutableBytes { raw in
+            let list = raw.baseAddress!.assumingMemoryBound(to: MIDIPacketList.self)
+            let packet = MIDIPacketListInit(list)
+            _ = MIDIPacketListAdd(list, 1024, packet, 0, bytes.count, bytes)
+            MIDISend(outPort, dest, list)
+        }
+        call.resolve()
+    }
+}
+
+class MidiViewController: CAPBridgeViewController {
+    override open func capacitorDidLoad() {
+        bridge?.registerPluginInstance(MidiBridgePlugin())
+    }
 }
