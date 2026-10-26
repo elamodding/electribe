@@ -51,3 +51,4 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - Menü: *Humanize* (zufälliger Timing-Versatz, 0–100) und *Transponieren* (±12 Halbtöne für Synth-Parts, pro Pattern).
 - **Step-Anzeige im LCD**: 16 Mini-Steps zeigen Pattern, Playhead und Last Step.
 - **Tastatur (PC/Windows-App)**: Leertaste = Play/Pause, Esc = Stop, ←/→ = Pattern/Part wechseln, Tasten 1–8 und Q–I = Pads 1–16.
+- Menü *Gate Time* (5–100 %): kürzt die Notenlänge pro Part auf einen Teil des Steps. Das LCD zeigt zusätzlich den Namen des gewählten Parts.
