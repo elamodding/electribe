@@ -47,3 +47,5 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - **Audio In**: Menü *Audio In* = AN nutzt das Mikrofon/Line-In, der Regler *Input Level* steuert die Lautstärke, Master Fx wirkt auf das Signal (Kopfhörer benutzen, sonst Rückkopplung).
 - Samples: Menü *Sample Start* (0–90 %) und *Sample rückwärts*.
 - Mehr Sounds: Synth-Parts haben 12 Oszillatoren (neu: Organ, Detune Sq, Noise Lead, Sync Saw), Drum-Parts 5 Varianten (neu: Deep, Bright). Auswahl per Oscillator-Regler.
+- **Gate Arp** wirkt jetzt auch auf Drums (Ratchet: zweiter Schlag in der Step-Mitte).
+- Menü: *Humanize* (zufälliger Timing-Versatz, 0–100) und *Transponieren* (±12 Halbtöne für Synth-Parts, pro Pattern).
