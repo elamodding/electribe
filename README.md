@@ -38,3 +38,5 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - **Shift** (einmal tippen, wirkt auf die nächste Aktion): Shift+Pad (Sequencer) = Last Step, Shift+Pad (Part Mute) = Solo, Shift+Write = Pattern kopieren, Shift+Exit = einfügen.
 - **Amp EG**: AN = Gate (lange Hüllkurve), AUS = Decay. **MFX Hold**: hält Touchpad-Effekt nach dem Loslassen.
 - **Master Fx** AN: Touchpad X = Effektanteil, Y = Feedback. Menü: *MFX Typ* (Reverb/Delay), *LFO Ziel* (Cutoff/Pan/Amp), *Pattern Länge*.
+- **Accent**: Drum-Pad im Sequencer mehrfach tippen: an → Accent (gelb, lauter, MIDI-Velocity 127) → aus.
+- Menü: *MFX Typ* jetzt Reverb/Delay/Filter/Crusher, *Part zufällig* füllt den Part mit zufälligem Pattern. Steps hinter dem Last Step erscheinen abgedunkelt.
