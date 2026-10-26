@@ -36,7 +36,7 @@ const cen=(cls,x,y,w,h,html,id)=>mk(cls,x-w/2,y-h/2,w,h,html,id);
 const lab=(t,x,y,s)=>{const d=cen('lb',x,y,140,16,t);d.style.fontSize=s+'px';return d};
 /* ---------- Daten ---------- */
 const PN=['Kick','Snare','Clap','Hi-Hat','Open Hat','Tom','Bass','Lead','Rim','Cowbell','Perc','Crash','Pad','Pluck','Sub','Stab'];
-const isSyn=i=>i==6||i==7||i>11,DT=['Synthclave','808 Style','Hard'],ST=['Saw','Square','Triangle','Sine','Super Saw','Octaver','FM Bell','Pulse FM'],SH=['Sine','Triangle','Square','Saw'],FXN=['Delay','Reverb','Drive'];
+const isSyn=i=>i==6||i==7||i>11,DT=['Synthclave','808 Style','Hard','Deep','Bright'],ST=['Saw','Square','Triangle','Sine','Super Saw','Octaver','FM Bell','Pulse FM','Organ','Detune Sq','Noise Lead','Sync Saw'],SH=['Sine','Triangle','Square','Saw'],FXN=['Delay','Reverb','Drive'];
 const DEF={osc:0,tune:50,cut:100,res:8,egi:0,spd:30,shp:0,mod:0,lvl:80,pan:50,atk:0,dec:40,ed:50,fty:'lowpass',ifx:0,mfx:0,mt:0,eg:1};
 const P=PN.map((_,i)=>({s:Array(16).fill(0),mute:false,v:{...DEF,dec:i==12?75:i==13?15:i==15?20:i>5?45:40,lvl:i==3?55:i==11?40:80,atk:i==12?40:0,osc:i==12?4:i==14?3:i==15?1:0,...(i>11?{cut:70}:{})}}));
 const G={vol:80,fxd:30,ft:0,bpm:134,sw:0,mfxOn:0,inp:50,len:16,mty:0};
@@ -44,7 +44,7 @@ const G={vol:80,fxd:30,ft:0,bpm:134,sw:0,mfxOn:0,inp:50,len:16,mty:0};
 for(let i=0;i<16;i+=2)P[3].s[i]=1;[2,3,6,10,11,14].forEach(i=>P[6].s[i]=36);P[6].v.cut=45;
 let M=P.map(()=>({})),L=P.map(()=>[]),LON=P.map(()=>[1,1,1,1]),S=[],cur=0,bank=0,sel=0,mode='seq',rec=false,playing=false,garp=false,tscale=false,shift=false,menuOn=false,mi=0,lastNote=48,oct=3,
  step=0,ph=-1,ctx,master,nodes=[],noiseBuf,nextT=0,timer,fx={},taps=[],tmp='',tmpT;
-const bf=i=>40*Math.pow(300,P[i].v.cut/100),curStep=()=>ph<0?0:ph,oscN=()=>isSyn(sel)?8:3,oscName=()=>(isSyn(sel)?ST:DT)[P[sel].v.osc%oscN()];
+const bf=i=>40*Math.pow(300,P[i].v.cut/100),curStep=()=>ph<0?0:ph,oscN=()=>isSyn(sel)?12:5,oscName=()=>(isSyn(sel)?ST:DT)[P[sel].v.osc%oscN()];
 /* ---------- MIDI-Out (nur iPad-App, Netzwerk-MIDI) ---------- */
 const MB=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.MidiBridge;
 let mOn=false,lmute=false,solo=-1,clip=null,hold=0,met=0,srS=-1,pclip=null,chain=[],chainOn=0,chainI=0,mic=null;
@@ -70,12 +70,12 @@ function env(g,t,a,d,pk=1){g.gain.setValueAtTime(.0001,t);g.gain.linearRampToVal
 function noise(t,dur,type,fr,q,d,pk,out){const s=ctx.createBufferSource();s.buffer=noiseBuf;s.loop=true;const f=ctx.createBiquadFilter();f.type=type;f.frequency.value=fr;f.Q.value=q;const g=ctx.createGain();env(g,t,.002,d,pk);s.connect(f);f.connect(g);g.connect(out);s.start(t);s.stop(t+dur)}
 function osc(t,type,f0,f1,fT,d,pk,out,a=.002){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f0,t);if(f1!==f0)o.frequency.exponentialRampToValueAtTime(f1,t+fT);env(g,t,a,d,pk);o.connect(g);g.connect(out);o.start(t);o.stop(t+a+d+.05)}
 function fm(t,f,r,ed,out,a,d){const c=ctx.createOscillator(),m=ctx.createOscillator(),mg=ctx.createGain(),g=ctx.createGain();c.frequency.value=f;m.frequency.value=f*r;mg.gain.setValueAtTime(f*(ed/25+.3),t);mg.gain.exponentialRampToValueAtTime(1,t+a+d);m.connect(mg);mg.connect(c.frequency);env(g,t,a,d,.6);c.connect(g);g.connect(out);c.start(t);m.start(t);c.stop(t+a+d+.05);m.stop(t+a+d+.05)}
-function syn(t,f,v,out,a,d){const ot=v.osc%8,w=['sawtooth','square','triangle','sine'];
+function syn(t,f,v,out,a,d){const ot=v.osc%12,w=['sawtooth','square','triangle','sine'];
  if(ot<4){osc(t,w[ot],f,f,0,d,.6,out,a);osc(t,w[ot],f/2,f/2,0,d,.4,out,a)}
  else if(ot==4){const k=.008*(1+v.ed/50);[-1,0,1].forEach(j=>osc(t,'sawtooth',f*(1+j*k),f*(1+j*k),0,d,.3,out,a))}
  else if(ot==5){osc(t,'sawtooth',f,f,0,d,.4,out,a);osc(t,'sawtooth',f*2.01,f*2.01,0,d,.3,out,a)}
- else fm(t,f,ot==6?3.5:1.5,v.ed,out,a,d)}
-function trig(i,t,val){init();{const dl=Math.max(0,(t-ctx.currentTime)*1000),nt=isSyn(i)?val:60;mout([0x90|i,nt,(!isSyn(i)&&val==2)?127:100],dl);mout([0x80|i,nt,0],dl+110)}if(lmute)return;const v=P[i].v,n=nodes[i],out=n.f,syn_=isSyn(i),tf=Math.pow(2,(v.tune-50)/50)*(syn_?1:[1,1.3,.75][v.osc%3]),d=v.eg?v.dec/100:.35+v.dec/100*1.2,a=.002+v.atk/100*.3;
+ else if(ot<8)fm(t,f,ot==6?3.5:1.5,v.ed,out,a,d);else if(ot==8)[1,2,3,4].forEach(h=>osc(t,'sine',f*h,f*h,0,d,.5/h,out,a));else if(ot==9){osc(t,'square',f*.995,f*.995,0,d,.3,out,a);osc(t,'square',f*1.005,f*1.005,0,d,.3,out,a)}else if(ot==10)noise(t,d+.1,'bandpass',f,12,d,.9,out);else osc(t,'sawtooth',f*2,f,.03,d,.6,out,a)}
+function trig(i,t,val){init();{const dl=Math.max(0,(t-ctx.currentTime)*1000),nt=isSyn(i)?val:60;mout([0x90|i,nt,(!isSyn(i)&&val==2)?127:100],dl);mout([0x80|i,nt,0],dl+110)}if(lmute)return;const v=P[i].v,n=nodes[i],out=n.f,syn_=isSyn(i),tf=Math.pow(2,(v.tune-50)/50)*(syn_?1:[1,1.3,.75,.6,1.6][v.osc%5]),d=v.eg?v.dec/100:.35+v.dec/100*1.2,a=.002+v.atk/100*.3;
  {const acc=!isSyn(i)&&val==2;n.g.gain.cancelScheduledValues(t);n.g.gain.setValueAtTime(v.lvl/100*(acc?1.5:1),t)}
  if(v.egi>0){const b=bf(i);n.f.frequency.cancelScheduledValues(t);n.f.frequency.setValueAtTime(Math.min(18000,b*(1+v.egi/100*10)),t);n.f.frequency.exponentialRampToValueAtTime(b,t+.04+d*.6)}
  const f=440*Math.pow(2,(val-69+(v.tune-50)*12/50)/12);
