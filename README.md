@@ -33,3 +33,8 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 2. In rtpMIDI das iPad unter "Directory" wählen und "Connect" (sonst manuell: IP des iPads, Port 5004).
 3. FL Studio: Options > MIDI Settings > Input: das rtpMIDI-Gerät aktivieren (Enable).
 4. In der App: Menu/Enter > "MIDI Out (WLAN)" > Menu/Enter = AN. Part n sendet auf MIDI-Kanal n (Drums: Note 60).
+
+## Neue Funktionen (Bedienung)
+- **Shift** (einmal tippen, wirkt auf die nächste Aktion): Shift+Pad (Sequencer) = Last Step, Shift+Pad (Part Mute) = Solo, Shift+Write = Pattern kopieren, Shift+Exit = einfügen.
+- **Amp EG**: AN = Gate (lange Hüllkurve), AUS = Decay. **MFX Hold**: hält Touchpad-Effekt nach dem Loslassen.
+- **Master Fx** AN: Touchpad X = Effektanteil, Y = Feedback. Menü: *MFX Typ* (Reverb/Delay), *LFO Ziel* (Cutoff/Pan/Amp), *Pattern Länge*.
