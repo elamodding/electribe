@@ -44,3 +44,5 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - Menü: *Metronom*, *Part kopieren/einfügen*, *Part rotieren* (1 Step nach rechts), *Pattern leeren*.
 - **Undo**: Shift+Stop (oder Menü *Undo*) macht die letzten Pattern-Änderungen rückgängig (20 Schritte).
 - **Chain**: Im Pattern-Set-Modus Shift+Pad fügt ein Pattern zur Kette hinzu; Menü *Chain* = AN spielt die Pattern nacheinander, *Chain leeren* setzt zurück.
+- **Audio In**: Menü *Audio In* = AN nutzt das Mikrofon/Line-In, der Regler *Input Level* steuert die Lautstärke, Master Fx wirkt auf das Signal (Kopfhörer benutzen, sonst Rückkopplung).
+- Samples: Menü *Sample Start* (0–90 %) und *Sample rückwärts*.
