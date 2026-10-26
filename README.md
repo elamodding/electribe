@@ -56,3 +56,4 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - **MFX Typ** jetzt auch *Flanger* (Touchpad Y = Speed) und *Comp* (Parallel-Kompressor, Y = Threshold).
 - **Chain Wdh** (1–8): wie oft jedes Pattern der Chain läuft, bevor das nächste kommt.
 - **MIDI Sync** (Menü, nach *MIDI aktivieren*): EXT folgt MIDI-Clock, Start/Stop und Tempo von außen. Program Change wechselt das Pattern.
+- **Velocity pro Step**: Shift+Keyboard schaltet den Velocity-Edit um; dann schaltet jeder Tipp auf ein aktives Step-Pad die Stufen 40/70/100/127 durch (Lautstärke und MIDI-Velocity). Die Step-Anzeige im LCD zeigt die Höhe.
