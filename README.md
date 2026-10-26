@@ -58,3 +58,9 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - **MIDI Sync** (Menü, nach *MIDI aktivieren*): EXT folgt MIDI-Clock, Start/Stop und Tempo von außen. Program Change wechselt das Pattern.
 - **Velocity pro Step**: Shift+Keyboard schaltet den Velocity-Edit um; dann schaltet jeder Tipp auf ein aktives Step-Pad die Stufen 40/70/100/127 durch (Lautstärke und MIDI-Velocity). Die Step-Anzeige im LCD zeigt die Höhe.
 - **Sample-Wellenform**: Menü *Wellenform* = AN legt die Anzeige über das Touchpad (zum Zurückschalten wieder AUS). Ziehen im Feld verschiebt die nähere der beiden orangen Marken: Start oder Ende (Sample spielt nur diesen Bereich). Funktioniert pro Part und wird gespeichert. Zum Verwenden des Touchpads Wellenform wieder ausschalten.
+
+## Hardtekk
+- Menü **Preset Hardtekk**: lädt 165 BPM mit Kick auf 1-2-3-4, Clap auf 2/4, offenen Hats auf dem Off-Beat, rollendem Bass, Hoover-Lead, Rave-Stab, Drive-Insert auf der Kick und Sidechain.
+- **Kick**: Drum-Oscillator *Hard* (verzerrt, hoher Pitch-Sweep) und *Tekk* (stärker verzerrt, tiefer) am Oscillator-Regler von Part 1.
+- **Synth**: neue Oszillatoren *Hoover* und *Rave Stab* (Parts 7, 13–16).
+- **Sidechain** (Menü, 0–100 %): alle anderen Parts werden bei jeder Kick abgesenkt (Pump-Effekt).
