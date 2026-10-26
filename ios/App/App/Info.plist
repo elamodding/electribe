@@ -53,5 +53,7 @@
 	<array>
 		<string>_apple-midi._udp</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Für den Audio-In der electribe (Mikrofon/Line-In).</string>
 </dict>
 </plist>

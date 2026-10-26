@@ -46,3 +46,4 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - **Chain**: Im Pattern-Set-Modus Shift+Pad fügt ein Pattern zur Kette hinzu; Menü *Chain* = AN spielt die Pattern nacheinander, *Chain leeren* setzt zurück.
 - **Audio In**: Menü *Audio In* = AN nutzt das Mikrofon/Line-In, der Regler *Input Level* steuert die Lautstärke, Master Fx wirkt auf das Signal (Kopfhörer benutzen, sonst Rückkopplung).
 - Samples: Menü *Sample Start* (0–90 %) und *Sample rückwärts*.
+- Mehr Sounds: Synth-Parts haben 12 Oszillatoren (neu: Organ, Detune Sq, Noise Lead, Sync Saw), Drum-Parts 5 Varianten (neu: Deep, Bright). Auswahl per Oscillator-Regler.
