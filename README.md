@@ -42,3 +42,5 @@ Die Datei build-ipa-workflow.yml.txt enthält den Inhalt für .github/workflows/
 - Menü: *MFX Typ* jetzt Reverb/Delay/Filter/Crusher, *Part zufällig* füllt den Part mit zufälligem Pattern. Steps hinter dem Last Step erscheinen abgedunkelt.
 - **Step-Rec**: Rec an, Sequencer gestoppt, dann in Trigger/Keyboard/Chord Pads spielen → Noten landen nacheinander auf Step 1, 2, 3 …
 - Menü: *Metronom*, *Part kopieren/einfügen*, *Part rotieren* (1 Step nach rechts), *Pattern leeren*.
+- **Undo**: Shift+Stop (oder Menü *Undo*) macht die letzten Pattern-Änderungen rückgängig (20 Schritte).
+- **Chain**: Im Pattern-Set-Modus Shift+Pad fügt ein Pattern zur Kette hinzu; Menü *Chain* = AN spielt die Pattern nacheinander, *Chain leeren* setzt zurück.
